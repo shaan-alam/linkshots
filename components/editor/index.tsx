@@ -16,7 +16,7 @@ const Editor = () => {
 
     if (editor?.backgroundType === EditorBackGroundEnum.image) {
       styles = {
-        backgroundImage: `url(${editor.imageUrl})`,
+        backgroundImage: `url("${editor.imageUrl || editor.aiGenImageUrl}")`,
         backgroundSize: "cover",
       };
     } else if (editor?.backgroundType === EditorBackGroundEnum.solid) {
@@ -24,6 +24,7 @@ const Editor = () => {
         backgroundColor: editor.color,
       };
     }
+
     return styles;
   };
 

@@ -8,7 +8,9 @@ export enum EditorBackGroundEnum {
 export type EditorBackground =
   | {
       backgroundType: EditorBackGroundEnum.image;
-      imageUrl: string;
+      imageUrl?: string;
+      aiGenImageUrl?: string;
+      prompt?: string;
     }
   | {
       backgroundType: EditorBackGroundEnum.solid;

@@ -9,3 +9,7 @@ body {
 .rcp {
   background: #fff !important;
 }
+
+.rcp-field-input {
+  @apply rounded-xl border-[#e5e7eb] py-2 bg-[#e5e7eb] text-default-700 focus:border-primary !important;
+}
