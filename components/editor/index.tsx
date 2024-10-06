@@ -2,8 +2,11 @@
 
 import { useAtom } from "jotai";
 
+import { cn } from "@/lib/utils";
 import { editorAtom } from "@/store";
 import { EditorBackGroundEnum } from "@/types";
+
+import "../../app/mesh.css";
 
 const Editor = () => {
   const [editor] = useAtom(editorAtom);
@@ -20,20 +23,18 @@ const Editor = () => {
       styles = {
         backgroundColor: editor.color,
       };
-    } else if (editor?.backgroundType === EditorBackGroundEnum.gradient) {
-      styles = {
-        backgroundImage: `url(${editor.gradientUrl})`,
-        backgroundSize: "cover",
-      };
     }
-
     return styles;
   };
 
   return (
     <div
       style={generateEditorStyles()}
-      className="h-full rounded-lg border p-4 shadow-md"
+      className={cn(
+        "h-full rounded-lg border p-4 shadow-md",
+        editor?.backgroundType === EditorBackGroundEnum.gradient &&
+          editor.gradientClassName
+      )}
     >
       <div>Editor</div>
     </div>

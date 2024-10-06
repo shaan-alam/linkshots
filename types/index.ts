@@ -16,7 +16,7 @@ export type EditorBackground =
     }
   | {
       backgroundType: EditorBackGroundEnum.gradient;
-      gradientUrl: string;
+      gradientClassName: string;
     };
 
 export type EditorProps = EditorBackground & {};

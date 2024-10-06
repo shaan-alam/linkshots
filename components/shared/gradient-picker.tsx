@@ -5,6 +5,7 @@ import "react-color-palette/css";
 import { gradients } from "@/constants/gradients";
 import { editorAtom } from "@/store";
 import { EditorBackGroundEnum, EditorProps } from "@/types";
+import { cn } from "@/lib/utils";
 
 const GradientPicker = () => {
   const [editor, setEditor] = useAtom(editorAtom);
@@ -13,7 +14,7 @@ const GradientPicker = () => {
     const newEditor: EditorProps = {
       ...editor,
       backgroundType: EditorBackGroundEnum.gradient,
-      gradientUrl: gradient.url,
+      gradientClassName: gradient.className,
     };
 
     setEditor(newEditor);
@@ -25,12 +26,7 @@ const GradientPicker = () => {
         <Tooltip key={gradient.id} content={gradient.name}>
           <span
             onClick={() => handleGradientClick(gradient)}
-            className="block h-[40px] w-[40px] cursor-pointer rounded-lg"
-            style={{
-              backgroundImage: `url(${gradient.thumbnail_url})`,
-              backgroundSize: "150%",
-              backgroundPosition: "center",
-            }}
+            className={cn("block h-[40px] w-[40px] cursor-pointer rounded-lg", gradient.className)}
           ></span>
         </Tooltip>
       ))}
