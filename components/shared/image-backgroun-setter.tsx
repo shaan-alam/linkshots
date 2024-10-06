@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 
-import { Button, Input, Textarea } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useAtom } from "jotai";
 
 import { editorAtom } from "@/store";
 import { EditorBackGroundEnum, EditorProps } from "@/types";
+
+import ImageGenerator from "./image-generator";
 
 const ImageBackgroundSetter = () => {
   const [imageURL, setImageURL] = useState("");
@@ -57,17 +59,7 @@ const ImageBackgroundSetter = () => {
           Set
         </Button>
       </div>
-      <div>
-        <h1 className="mb-2 text-sm text-default-600">Generate An Image</h1>
-        <Textarea
-          label="Your Prompt"
-          placeholder="A serene landscape with mountains and a lake..."
-          className="max-w-xs"
-        />
-        <Button fullWidth className="mt-2" color="primary" disableRipple>
-          Generate
-        </Button>
-      </div>
+      <ImageGenerator />
     </div>
   );
 };
