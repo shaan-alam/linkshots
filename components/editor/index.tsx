@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { editorAtom } from "@/store";
 import { EditorBackGroundEnum } from "@/types";
 
-import "../../app/mesh.css";
+import "../../app/gradients.css";
 
 const Editor = () => {
   const [editor] = useAtom(editorAtom);

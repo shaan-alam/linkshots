@@ -18,7 +18,6 @@ type ImageGenerationPreviewProps = {
   };
   resetData: () => void;
   isGenerating: boolean;
-  removeImageBackground: () => void;
 };
 
 const ImageGenerationPreview = ({
