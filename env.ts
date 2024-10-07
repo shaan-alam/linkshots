@@ -11,6 +11,7 @@ export const env = createEnv({
     DB_URI: z.string(),
     DB_URI_DIRECT: z.string(),
     CLERK_SECRET_KEY: z.string(),
+    WEBHOOK_SECRET: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -27,6 +28,7 @@ export const env = createEnv({
    * You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
+    WEBHOOK_SECRET: process.env.WEBHOOK_SECRET,
     DB_URI: process.env.DB_URI,
     DB_URI_DIRECT: process.env.DB_URI_DIRECT,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
