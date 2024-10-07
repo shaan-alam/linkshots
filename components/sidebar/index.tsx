@@ -1,5 +1,6 @@
 "use client";
 
+import { SignOutButton } from "@clerk/nextjs";
 import { Tab, Tabs } from "@nextui-org/react";
 
 import BackgroundSettings from "../frame-settings/background";
@@ -13,6 +14,7 @@ const Sidebar = () => {
           <BackgroundSettings />
         </Tab>
       </Tabs>
+      <SignOutButton redirectUrl="/" />
     </aside>
   );
 };

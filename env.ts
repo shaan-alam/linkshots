@@ -9,7 +9,8 @@ export const env = createEnv({
    */
   server: {
     DB_URI: z.string(),
-    CLERK_SECRET_KEY: z.string()
+    DB_URI_DIRECT: z.string(),
+    CLERK_SECRET_KEY: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -27,7 +28,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DB_URI: process.env.DB_URI,
+    DB_URI_DIRECT: process.env.DB_URI_DIRECT,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
   },
 });
