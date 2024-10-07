@@ -4,30 +4,18 @@ import "react-color-palette/css";
 
 import { gradients, meshGradients } from "@/constants/gradients";
 import { cn } from "@/lib/utils";
-import { editorAtom, editorBackgroundSettingAtom } from "@/store";
-import { EditorBackGroundEnum, EditorProps } from "@/types";
+import { editorStateAtom } from "@/store";
 
 const GradientPicker = () => {
-  const [editorBackgroundSetting, setEditorBackgroundSetting] = useAtom(
-    editorBackgroundSettingAtom
-  );
-
-  const [editor, setEditor] = useAtom(editorAtom);
+  const [editorState, setEditorState] = useAtom(editorStateAtom);
 
   const handleGradientClick = (gradient: (typeof gradients)[0]) => {
-    setEditorBackgroundSetting({
-      type: EditorBackGroundEnum.gradient,
-      gradientClassName: gradient.className,
-      activeGradientClassName: gradient.className,
+    setEditorState({
+      backgroundSetting: {
+        backgroundType: "gradient",
+        gradientClassName: gradient.className,
+      },
     });
-
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.gradient,
-      gradientClassName: gradient.className,
-    };
-
-    setEditor(newEditor);
   };
 
   return (
@@ -42,7 +30,7 @@ const GradientPicker = () => {
                 className={cn(
                   "block h-[40px] w-[40px] cursor-pointer rounded-lg ring-2 ring-transparent ring-offset-2",
                   gradient.className,
-                  editorBackgroundSetting.activeGradientClassName ===
+                  editorState?.backgroundSetting.gradientClassName ===
                     gradient.className
                     ? "ring-primary"
                     : ""
@@ -63,7 +51,7 @@ const GradientPicker = () => {
                 className={cn(
                   "block h-[40px] w-[40px] cursor-pointer rounded-lg ring-2 ring-transparent ring-offset-2",
                   gradient.className,
-                  editorBackgroundSetting.activeGradientClassName ===
+                  editorState?.backgroundSetting.gradientClassName ===
                     gradient.className
                     ? "ring-primary"
                     : ""

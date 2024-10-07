@@ -12,17 +12,16 @@ import {
   imageGenAction,
 } from "@/actions/image-gen.action";
 import { useServerActionMutation } from "@/hooks/server-action-hooks";
-import { editorBackgroundSettingAtom } from "@/store";
-import { EditorBackGroundEnum } from "@/types";
+import { editorStateAtom } from "@/store";
 
 import ImageGenerationPreview from "./image-gen-preview";
 
 const ImageGenerator = () => {
-  const [editorBackgroundSetting, setEditorBackgroundSetting] = useAtom(
-    editorBackgroundSettingAtom
-  );
+  const [editorState, setEditorState] = useAtom(editorStateAtom);
 
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(
+    editorState?.backgroundSetting.prompt || ""
+  );
 
   const {
     mutate: generateImage,
@@ -30,10 +29,13 @@ const ImageGenerator = () => {
     data: imageURL,
     reset: resetImage,
   } = useServerActionMutation(imageGenAction, {
-    onSuccess: (data) => {
-      setEditorBackgroundSetting({
-        type: EditorBackGroundEnum.image,
-        aiGenImageUrl: data,
+    onSuccess: () => {
+      setEditorState({
+        backgroundSetting: {
+          backgroundType: "image",
+          imageUrl: "",
+          prompt,
+        },
       });
     },
   });
@@ -87,16 +89,14 @@ const ImageGenerator = () => {
         </Button>
       </div>
 
-      {editorBackgroundSetting.aiGenImageUrl && (
-        <ImageGenerationPreview
-          props={{ imageURL, prompt }}
-          isGenerating={isGenerating}
-          resetData={() => {
-            resetImage();
-            setPrompt("");
-          }}
-        />
-      )}
+      <ImageGenerationPreview
+        props={{ imageURL, prompt }}
+        isGenerating={isGenerating}
+        resetData={() => {
+          resetImage();
+          setPrompt("");
+        }}
+      />
     </div>
   );
 };

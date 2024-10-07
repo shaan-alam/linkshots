@@ -8,8 +8,7 @@ import { IconX } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 
-import { editorAtom, editorBackgroundSettingAtom } from "@/store";
-import { EditorBackGroundEnum, EditorProps } from "@/types";
+import { editorStateAtom } from "@/store";
 
 type ImageGenerationPreviewProps = {
   props: {
@@ -25,10 +24,9 @@ const ImageGenerationPreview = ({
   resetData,
   isGenerating,
 }: ImageGenerationPreviewProps) => {
-  const [, setEditorBackgroundSetting] = useAtom(editorBackgroundSettingAtom);
+  const [, setShot] = useAtom(editorStateAtom);
 
   const [isImageLoading, setImageLoading] = useState(true);
-  const [editor, setEditor] = useAtom(editorAtom);
 
   useEffect(() => {
     const fecthImage = async () => {
@@ -40,30 +38,24 @@ const ImageGenerationPreview = ({
   }, [props.imageURL]);
 
   const setImageBackgroundd = () => {
-    setEditorBackgroundSetting({
-      type: EditorBackGroundEnum.image,
-      aiGenImageUrl: props.imageURL as string,
+    setShot({
+      backgroundSetting: {
+        backgroundType: "image",
+        gradientClassName: "",
+        imageUrl: "",
+        aiGenImageUrl: props.imageURL,
+        prompt: props.prompt,
+      },
     });
-
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.image,
-      aiGenImageUrl: props.imageURL as string,
-      prompt: props.prompt,
-      imageUrl: "",
-    };
-
-    setEditor(newEditor);
   };
 
   const resetBackground = () => {
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.image,
-      aiGenImageUrl: "",
-      prompt: "",
-    };
-    setEditor(newEditor);
+    setShot({
+      backgroundSetting: {
+        backgroundType: "image",
+        aiGenImageUrl: "",
+      },
+    });
 
     resetData();
   };

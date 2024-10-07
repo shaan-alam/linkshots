@@ -2,27 +2,22 @@ import { useAtom } from "jotai";
 import { ColorPicker, IColor, useColor } from "react-color-palette";
 import "react-color-palette/css";
 
-import { editorAtom, editorBackgroundSettingAtom } from "@/store";
-import { EditorBackGroundEnum, EditorProps } from "@/types";
+import { editorStateAtom } from "@/store";
 
 const SolidColorPicker = () => {
-  const [, setEditorBackgroundSetting] = useAtom(editorBackgroundSettingAtom);
-  const [editor, setEditor] = useAtom(editorAtom);
+  const [, setEditorState] = useAtom(editorStateAtom);
+
   const [color, setColor] = useColor("#561ecb");
 
   const onColorChange = (color: IColor) => {
-    setEditorBackgroundSetting({
-      type: EditorBackGroundEnum.solid,
-      color: color.hex,
+    setEditorState({
+      backgroundSetting: {
+        backgroundType: "solid",
+        color: color.hex,
+      },
     });
-    setColor(color);
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.solid,
-      color: color.hex,
-    };
 
-    setEditor(newEditor);
+    setColor(color);
   };
 
   return (

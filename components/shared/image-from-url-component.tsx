@@ -7,21 +7,14 @@ import { IconX } from "@tabler/icons-react";
 import { useAtom } from "jotai";
 
 import { getImageObjectFromURL } from "@/lib/utils";
-import {
-  editorAtom,
-  editorBackgroundSettingAtom
-} from "@/store";
-import { EditorBackGroundEnum, EditorProps } from "@/types";
+import { editorStateAtom } from "@/store";
 
 const ImageFromURLComponent = () => {
-  const [editorBackgroundSetting, setEditorBackgroundSetting] = useAtom(
-    editorBackgroundSettingAtom
-  );
+  const [editorState, setEditorState] = useAtom(editorStateAtom);
 
   const [imageURL, setImageURL] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [editor, setEditor] = useAtom(editorAtom);
 
   const setEditorBackgroundImage = async () => {
     setIsLoading(true);
@@ -29,39 +22,28 @@ const ImageFromURLComponent = () => {
     const imageObjectURL = (await getImageObjectFromURL(imageURL)) as string;
 
     if (imageObjectURL) {
-      setEditorBackgroundSetting({
-        type: EditorBackGroundEnum.image,
-        imageUrl: imageURL,
-        aiGenImageUrl: "",
+      setEditorState({
+        backgroundSetting: {
+          backgroundType: "image",
+          imageUrl: imageURL,
+          aiGenImageUrl: "",
+          gradientClassName: "",
+        },
       });
     }
 
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.image,
-      imageUrl: imageObjectURL,
-      aiGenImageUrl: "",
-      prompt: "",
-    };
-
-    setEditor(newEditor);
     setIsLoading(false);
   };
 
   const removeImageBackground = () => {
     setImageURL("");
 
-    setEditorBackgroundSetting({
-      type: EditorBackGroundEnum.image,
-      imageUrl: "",
+    setEditorState({
+      backgroundSetting: {
+        backgroundType: "image",
+        imageUrl: "",
+      },
     });
-
-    const newEditor: EditorProps = {
-      ...editor,
-      backgroundType: EditorBackGroundEnum.image,
-      imageUrl: "",
-    };
-    setEditor(newEditor);
   };
   return (
     <div>
@@ -81,7 +63,7 @@ const ImageFromURLComponent = () => {
       >
         Set
       </Button>
-      {editorBackgroundSetting.imageUrl && (
+      {editorState?.backgroundSetting.imageUrl && (
         <div
           className="relative mt-2 block h-[100px] w-[100px] rounded-lg"
           style={{

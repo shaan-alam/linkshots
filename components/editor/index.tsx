@@ -3,25 +3,24 @@
 import { useAtom } from "jotai";
 
 import { cn } from "@/lib/utils";
-import { editorAtom } from "@/store";
-import { EditorBackGroundEnum } from "@/types";
+import { editorStateAtom } from "@/store";
 
 import "../../app/gradients.css";
 
 const Editor = () => {
-  const [editor] = useAtom(editorAtom);
+  const [editorState] = useAtom(editorStateAtom);
 
   const generateEditorStyles = () => {
     let styles = {};
 
-    if (editor?.backgroundType === EditorBackGroundEnum.image) {
+    if (editorState?.backgroundSetting.backgroundType === "solid") {
       styles = {
-        backgroundImage: `url("${editor.imageUrl || editor.aiGenImageUrl}")`,
-        backgroundSize: "cover",
+        backgroundColor: editorState.backgroundSetting.color,
       };
-    } else if (editor?.backgroundType === EditorBackGroundEnum.solid) {
+    } else if (editorState?.backgroundSetting.backgroundType === "image") {
       styles = {
-        backgroundColor: editor.color,
+        backgroundImage: `url("${editorState.backgroundSetting.imageUrl || editorState.backgroundSetting.aiGenImageUrl}")`,
+        backgroundSize: "cover",
       };
     }
 
@@ -33,8 +32,9 @@ const Editor = () => {
       style={generateEditorStyles()}
       className={cn(
         "h-full rounded-lg border p-4 shadow-md",
-        editor?.backgroundType === EditorBackGroundEnum.gradient &&
-          editor.gradientClassName
+        editorState?.backgroundSetting.backgroundType === "gradient"
+          ? editorState?.backgroundSetting.gradientClassName
+          : ""
       )}
     >
       <div>Editor</div>
